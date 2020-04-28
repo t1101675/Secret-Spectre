@@ -8,3 +8,4 @@ Spectre
 .tmp_versions/
 *.swp
 *.mod.c
+*.un~
