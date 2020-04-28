@@ -20,7 +20,7 @@ sudo cat /boot/System.map-`uname -r` | grep sys_call_table
 cd Secret-Spectre
 make
 sudo dmesg -C
-sudo insmod Syscall.ko
+sudo insmod SystemCall.ko
 sudo insmod mmap_test_kernel.ko
 dmesg
 ```
@@ -53,4 +53,5 @@ sudo ./Spectre ffff880017900000 2b2096d8
 
 1. 我的Ubuntu为16.04（就是助教发的那个链接），Linux内核版本为4.4.0，原来更高版本的内核加不了系统调用，还手动降了版本。
 2. 即便这样换一台机器也不一定能运行...
-3. 有什么问题欢迎指出！
+3. Linux内核降了版本之后可能会出现找不到build目录的问题，可以参考 https://askubuntu.com/questions/554624/how-to-resolve-the-lib-modules-3-13-0-27-generic-build-no-such-file-or-direct 下一个开发包。
+4. 有什么问题欢迎指出！
