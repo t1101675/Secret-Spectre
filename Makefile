@@ -1,4 +1,4 @@
-obj-m:=SystemCall.o
+obj-m:=SystemCall.o mmap_test_kernel.o
 CURRENT_PATH:=$(shell pwd)
 LINUX_KERNEL_PATH:=/lib/modules/$(shell uname -r)/build
 all:
