@@ -1,0 +1,10 @@
+Spectre
+*.ko
+*.o
+*.order
+*.symvers
+.vscode/
+*.cmd
+.tmp_versions/
+*.swp
+*.mod.c
